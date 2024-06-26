@@ -1,0 +1,67 @@
+import turtle
+import random
+
+def setup_turtle(color):
+    t = turtle.Turtle()
+    t.speed(0)
+    t.color(color)
+    t.penup()
+    return t
+
+def draw_cube(t, size):
+    for _ in range(4):
+        t.forward(size)
+        t.left(90)
+    t.left(45)
+    t.forward(size / 2)
+    t.left(135)
+    for _ in range(4):
+        t.forward(size)
+        t.right(90)
+    t.left(45)
+    t.forward(size / 2)
+    t.left(135)
+
+def draw_tank_base(turtles, size):
+    for i, t in enumerate(turtles):
+        t.goto(-size/2 + (i % 10) * (size / 10), -size/2 + (i // 10) * (size / 10))
+        t.pendown()
+        draw_cube(t, size / 10)
+        t.penup()
+
+def draw_turret(t, size):
+    t.goto(0, 0)
+    t.pendown()
+    for _ in range(4):
+        t.forward(size / 4)
+        t.left(90)
+    t.penup()
+
+def draw_cannon(t, size):
+    t.goto(0, 0)
+    t.left(90)
+    t.forward(size / 4)
+    t.pendown()
+    t.forward(size / 2)
+    t.penup()
+
+def main():
+    turtle.setup(800, 800)
+    turtle.bgcolor("black")
+    turtle.title("3D Tank Drawing with 500 Turtles")
+    
+    num_turtles = 500
+    tank_size = 200
+    turtles = [setup_turtle("white") for _ in range(num_turtles)]
+    
+    draw_tank_base(turtles, tank_size)
+    
+    # Draw turret and cannon with a single turtle
+    single_turtle = setup_turtle("red")
+    draw_turret(single_turtle, tank_size)
+    draw_cannon(single_turtle, tank_size)
+
+    turtle.done()
+
+if __name__ == "__main__":
+    main()
